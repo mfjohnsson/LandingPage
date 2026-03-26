@@ -1,19 +1,8 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { Providers } from './providers';
+import { ThemeProvider } from 'next-themes';
 
 import Navbar from '@/components/Navbar';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
 
 export const metadata: Metadata = {
   title: 'Martin Johansson || Developer',
@@ -26,16 +15,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang='en'
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      suppressHydrationWarning
-    >
-      <body className='min-h-full flex flex-col'>
-        <Providers>
+    <html lang='en' suppressHydrationWarning className='h-full'>
+      <body className='antialiased bg-background text-foreground min-h-full'>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
           <Navbar />
-          <main className='min-h-screen'>{children}</main>
-        </Providers>
+          <main className='h-full w-full'>{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );
