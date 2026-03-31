@@ -32,7 +32,7 @@ export default function ProjectCard({
             {github && (
               <a
                 href={github}
-                className='hover:text-accent-p transition-colors'
+                className='hover:text-accent-p ml-4 transition-colors'
               >
                 <IconBrandGithub size={20} />
               </a>
