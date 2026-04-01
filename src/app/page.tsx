@@ -5,11 +5,13 @@ import BentoGrid from '@/components/BentoGrid';
 
 const projects = [
   {
-    title: 'Projekt 1',
-    description: 'En app',
-    tags: ['ett, två, tre'],
-    link: '#',
-    github: '#',
+    title: 'SoundStage',
+    description:
+      'En interaktiv visuell plattform för musik och boards. Byggd för att skapa unika ljudlandskap och samarbeten i realtid.',
+    tags: ['Next.js', 'Vercel', 'Real-time', 'Tailwind'],
+    link: 'https://sound-stage-f2xk.vercel.app/?boardId=cmmdz0ibd0000uuvsuquk8sa8',
+    github: 'https://github.com/mfjohnsson/SoundStage',
+    image: '/soundstage-screenshot.png',
   },
 ];
 

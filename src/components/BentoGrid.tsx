@@ -1,20 +1,42 @@
 import Image from 'next/image';
+import FlipCard from '@/components/FlipCard';
+import { MapPin, Calendar, Code2 } from 'lucide-react';
 
 export default function BentoGrid() {
   return (
     <div className='grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-150'>
       {/* Stor ruta - Vem är jag? */}
-      <div className='md:col-span-2 md:row-span-2 bg-card-bg border border-card-border rounded-3 p-8 flex flex-col group hover:border-accent-p/50 transition-colors'>
-        <div className='mb-4 w-50 h-50 relative overflow-hidden rounded-full border-2 border-accent-p'>
-          <Image
-            src='/death.png'
-            alt='Martin Johansson'
-            fill
-            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-            className='object-contain top-1'
+      <div className='md:col-span-2 md:row-span-2 bg-card-bg border border-card-border rounded-3xl p-8 flex flex-col group'>
+        {/* Bilden - Nu med flip-funktion! */}
+        <div className='mb-6 w-full flex justify-center'>
+          <FlipCard
+            frontImageSrc='/death.png'
+            frontImageAlt='Martin Johansson'
+            backContent={
+              <div className='text-sm text-muted'>
+                <h3 className='font-bold text-[20px] text-white mb-2 underline'>
+                  Snabbfakta
+                </h3>
+                <ul className='text-left space-y-1'>
+                  <li className='flex items-center gap-3 text-muted'>
+                    <MapPin size={14} className='text-accent-p' />
+                    <span className='text-xs '>Kalmar, Sverige</span>
+                  </li>
+                  <li className='flex items-center gap-3 text-muted'>
+                    <Calendar size={14} className='text-accent-p' />
+                    <span className='text-xs'>1991</span>
+                  </li>
+                  <li className='flex items-center gap-3 text-muted'>
+                    <Code2 size={14} className='text-accent-p' />
+                    <span className='text-xs'>Developer</span>
+                  </li>
+                </ul>
+              </div>
+            }
           />
         </div>
-        <h3 className='text-2xl font-bold mb-2'>Martin Johansson</h3>
+
+        <h2 className='text-2xl font-bold mb-2'>Martin Johansson</h2>
         <p className='text-muted leading-relaxed'>
           Jag är en utvecklare som drivs av att bygga nya lösningar, skapa
           världar och meningsfulla upplevelser. Om det så är inom design, musik

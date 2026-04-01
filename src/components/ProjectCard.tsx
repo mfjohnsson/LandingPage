@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { IconBrandGithub, IconExternalLink } from '@tabler/icons-react';
+import Image from 'next/image';
 
 interface ProjectProps {
   title: string;
@@ -9,6 +10,7 @@ interface ProjectProps {
   tags: string[];
   link: string;
   github?: string;
+  image?: string;
 }
 
 export default function ProjectCard({
@@ -17,14 +19,34 @@ export default function ProjectCard({
   tags,
   link,
   github,
+  image,
 }: ProjectProps) {
   return (
     <motion.div
       whileHover={{ y: -8 }}
       className='group relative p-6 rounded-3xl bg-card-bg border border-card-border hover:border-accent-p/50 transition-colors overflow-hidden'
     >
-      <div className='absolute -right-10 -top-10 w-32 h-32 bg-accent-p/10 blur-3xl group-hover:bg-accent-p/20 transition-colors rounded-full' />
+      {/* 1. BILD-SEKTIONEN (Visas bara om image finns) */}
+      {image && (
+        <a
+          href={link}
+          target='_blank' // Öppna i ny flik
+          rel='noopener noreferrer'
+          className='hover:text-accent-p transition-colors'
+        >
+          <div className='relative w-full h-40 mb-6 overflow-hidden rounded-2xl border border-card-border/50'>
+            <Image
+              src={image}
+              alt={`${title} screenshot`}
+              fill
+              sizes='(max-width: 768px) 100vw, 33vw'
+              className='group-hover:scale-105 transition-transform duration-300' // Liten zoom vid hover
+            />
+          </div>
+        </a>
+      )}
 
+      {/* 2. TEXT-SEKTIONEN (Samma som tidigare, men med mindre mb på p) */}
       <div className='relative z-10'>
         <div className='flex justify-between items-start mb-4'>
           <h3 className='text-xl font-bold text-foreground'>{title}</h3>
@@ -32,19 +54,27 @@ export default function ProjectCard({
             {github && (
               <a
                 href={github}
-                className='hover:text-accent-p ml-4 transition-colors'
+                target='_blank' // Öppna i ny flik
+                rel='noopener noreferrer'
+                className='hover:text-accent-p transition-colors'
               >
                 <IconBrandGithub size={20} />
               </a>
             )}
-            <a href={link} className='hover:text-accent-p transition-colors'>
+            <a
+              href={link}
+              target='_blank' // Öppna i ny flik
+              rel='noopener noreferrer'
+              className='hover:text-accent-p transition-colors'
+            >
               <IconExternalLink size={20} />
             </a>
           </div>
         </div>
 
-        <p className='text-muted text-sm mb-6 leading-relaxed'>{description}</p>
+        <p className='text-muted text-sm mb-5 leading-relaxed'>{description}</p>
 
+        {/* Taggar (Samma som tidigare) */}
         <div className='flex flex-wrap gap-2'>
           {tags.map((tag) => (
             <span
