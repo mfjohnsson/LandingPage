@@ -56,7 +56,7 @@ export default function Home() {
       <FadeInSection>
         <section
           id='about'
-          className='min-h-screen w-full max-w-6xl px-6 py-16 border-t border-card-border/50'
+          className='min-h-screen w-full max-w-6xl px-6 py-32 border-t border-card-border/50'
         >
           <h2 className='text-3xl font-bold mb-10 italic uppercase tracking-tighter text-center'>
             Om Mig
@@ -74,7 +74,7 @@ export default function Home() {
           <h2 className='text-4xl font-black mb-6'>
             Sugen på att bygga något?
           </h2>
-          <button className='px-10 py-4 bg-accent-p rounded-full font-bold hover:scale-110 transition-transform'>
+          <button className='px-10 py-4 bg-accent-p text-background rounded-full font-bold hover:scale-110 transition-transform'>
             Skicka ett meddelande
           </button>
         </section>

@@ -82,9 +82,9 @@ export default function BentoGrid() {
         className='relative md:col-span-1 bg-card-bg border border-card-border rounded-3xl p-6 flex flex-col items-center justify-center text-center group overflow-hidden transition-all hover:border-accent-p/50'
       >
         {/* Texten - vi lägger till en liten pil eller effekt vid hover */}
-        <div className='relative z-10 transition-transform group-hover:scale-105'>
+        <div className='relative text-black z-10 transition-transform group-hover:scale-105'>
           <p className='text-sm font-medium'>Baserad i</p>
-          <span className='text-3xl mb-1'>📍</span>
+          <span className='absolute text-3xl mb-1 left-12.5 top-16'>📍</span>
           <p className='text-xs'>Sverige, Kalmar</p>
 
           {/* En liten diskret text som dyker upp vid hover */}
@@ -99,7 +99,7 @@ export default function BentoGrid() {
           fill
           priority
           sizes='(max-width: 768px) 100vw, 25vw'
-          className='-z-10 opacity-50 group-hover:opacity-70 object-cover rounded-3xl transition-opacity'
+          className='opacity-90 group-hover:opacity-70 object-cover rounded-3xl transition-opacity'
         />
       </a>
 
