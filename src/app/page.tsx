@@ -2,6 +2,7 @@ import Hero from '@/components/Hero';
 import ProjectCard from '@/components/ProjectCard';
 import FadeInSection from '@/components/FadeInSection';
 import BentoGrid from '@/components/BentoGrid';
+import ContactGrid from '@/components/ContactGrid';
 
 const projects = [
   {
@@ -71,12 +72,7 @@ export default function Home() {
           id='contact'
           className='min-h-screen flex flex-col items-center gap-6 justify-center px-6'
         >
-          <h2 className='text-4xl font-black mb-6'>
-            Sugen på att bygga något?
-          </h2>
-          <button className='px-10 py-4 bg-accent-p text-background rounded-full font-bold hover:scale-110 transition-transform'>
-            Skicka ett meddelande
-          </button>
+          <ContactGrid />
         </section>
       </FadeInSection>
     </div>

@@ -38,7 +38,7 @@ export default function Home() {
         <a
           href='#contact'
           onClick={(e) => scrollToSection(e, 'contact')}
-          className='px-8 py-3 rounded-full bg-card-bg border-2 border-card-border text-white font-semibold hover:scale-105 transition-transform'
+          className='px-8 py-3 rounded-full bg-card-bg border-2 border-card-border font-semibold hover:scale-105 transition-transform'
         >
           Säg hej!
         </a>

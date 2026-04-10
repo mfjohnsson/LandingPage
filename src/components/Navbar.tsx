@@ -2,83 +2,119 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IconChevronRight, IconChevronLeft } from '@tabler/icons-react';
+import { IconChevronLeft } from '@tabler/icons-react';
 import ThemeSwitcher from './ThemeSwitcher';
 
-const scrollToSection = (e: React.MouseEvent, id: string) => {
-  e.preventDefault();
-  const element = document.getElementById(id);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
-};
+type Mode = 'auto' | 'manual-expanded' | 'manual-collapsed';
 
 export default function Navbar() {
-  const [isExpanded, setIsExpanded] = useState(true); // Kontrollerar om navbaren är öppen
+  const [mode, setMode] = useState<Mode>('auto');
+  const [autoExpanded, setAutoExpanded] = useState(true);
+
+  const isExpanded =
+    mode === 'auto' ? autoExpanded : mode === 'manual-expanded' ? true : false;
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsExpanded(false); // Stäng när man scrollar ner
-      } else {
-        setIsExpanded(true); // Öppna när man är högst upp (Hero)
+      const atTop = window.scrollY < 10;
+
+      if (atTop) {
+        setMode('auto');
+        setAutoExpanded(true);
+        return;
+      }
+
+      if (mode === 'auto') {
+        setAutoExpanded(window.scrollY <= 50);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [mode]);
+
+  const handleLinkClick = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+
+    if (id === 'home') {
+      setMode('auto');
+      setAutoExpanded(true);
+    } else {
+      setMode('manual-expanded');
+    }
+
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleManualToggle = () => {
+    if (isExpanded) {
+      setMode('auto');
+      setAutoExpanded(false);
+    } else {
+      setMode('manual-expanded');
+    }
+  };
 
   return (
-    <nav className='fixed top-0 left-0 w-full z-50 flex  p-4 pointer-events-none'>
-      {/* Vi använder motion.div för att animera bredden på själva "piller-containern" 
-        pointer-events-auto behövs för att man ska kunna klicka på navbaren trots att nav-taggen är transparent
-      */}
+    <nav className='fixed top-0 left-0 w-full z-50 flex p-4 pointer-events-none'>
       <motion.div
-        initial={false}
-        animate={{ width: isExpanded ? 'auto' : '160px' }}
-        className='flex items-center gap-4 h-14 rounded-2xl bg-card-bg border border-card-border backdrop-blur-md shadow-lg px-4 overflow-hidden pointer-events-auto'
+        layout
+        transition={{
+          type: 'spring',
+          stiffness: 300,
+          damping: 28,
+          mass: 1,
+        }}
+        className='flex items-center gap-4 h-14 rounded-2xl bg-card-bg border border-card-border backdrop-blur-md shadow-lg px-4 overflow-hidden pointer-events-auto w-auto'
       >
-        {/* LOGO & TOGGLE */}
         <div className='flex items-center gap-2 shrink-0'>
           <a
             href='#home'
-            onClick={(e) => scrollToSection(e, 'home')}
-            className='text-xl font-bold tracking-tighter hover:opacity-80 transition-opacity'
+            onClick={(e) => handleLinkClick(e, 'home')}
+            className='text-xl font-bold tracking-tighter hover:opacity-80 transition-opacity flex items-center'
           >
             <span className='text-accent-p'>PROJEKT</span>
             <span className='text-foreground'>.DB</span>
           </a>
 
-          {/* PIL-KNAPPEN */}
           <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className='p-1 hover:bg-accent-p/10 rounded-lg text-muted hover:text-accent-p transition-all'
+            onClick={handleManualToggle}
+            className='p-1 hover:bg-accent-p/10 rounded-lg text-muted hover:text-accent-p transition-all ml-1'
           >
-            {isExpanded ? (
+            <motion.div
+              animate={{ rotate: isExpanded ? 0 : 180 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+            >
               <IconChevronLeft size={18} />
-            ) : (
-              <IconChevronRight size={18} />
-            )}
+            </motion.div>
           </button>
         </div>
 
-        {/* INNEHÅLLET SOM GÅR ATT STÄNGA */}
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {isExpanded && (
             <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
+              animate={{
+                width: isExpanded ? 'auto' : 0,
+                opacity: isExpanded ? 1 : 0,
+              }}
+              transition={{
+                width: {
+                  type: 'spring',
+                  stiffness: 280,
+                  damping: 26,
+                  mass: 0.9,
+                },
+                opacity: { duration: 0.15, ease: 'easeInOut' },
+              }}
+              style={{ overflow: 'hidden' }}
               className='flex items-center gap-6'
             >
-              <div className='h-6 w-px bg-card-border mx-2' />{' '}
-              {/* En liten vertikal avdelare */}
-              <ul className='hidden md:flex items-center gap-6 text-sm font-medium text-muted'>
+              <div className='h-6 w-px bg-card-border mx-2 shrink-0' />
+              <ul className='hidden md:flex items-center gap-6 text-sm font-medium text-muted shrink-0'>
                 <li>
                   <a
                     href='#projects'
-                    onClick={(e) => scrollToSection(e, 'projects')}
+                    onClick={(e) => handleLinkClick(e, 'projects')}
                     className='hover:text-accent-p transition-colors'
                   >
                     Projekt
@@ -87,7 +123,7 @@ export default function Navbar() {
                 <li>
                   <a
                     href='#about'
-                    onClick={(e) => scrollToSection(e, 'about')}
+                    onClick={(e) => handleLinkClick(e, 'about')}
                     className='hover:text-accent-p transition-colors'
                   >
                     Om mig
@@ -96,14 +132,14 @@ export default function Navbar() {
                 <li>
                   <a
                     href='#contact'
-                    onClick={(e) => scrollToSection(e, 'contact')}
+                    onClick={(e) => handleLinkClick(e, 'contact')}
                     className='hover:text-accent-p transition-colors'
                   >
                     Kontakt
                   </a>
                 </li>
               </ul>
-              <div className='pl-4 border-l border-card-border'>
+              <div className='pl-4 border-l border-card-border shrink-0'>
                 <ThemeSwitcher />
               </div>
             </motion.div>
