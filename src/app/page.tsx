@@ -8,8 +8,16 @@ const projects = [
   {
     title: 'SoundStage',
     description:
-      'En interaktiv visuell plattform för musik och boards. Byggd för att skapa unika ljudlandskap och samarbeten i realtid.',
-    tags: ['Next.js', 'Vercel', 'Real-time', 'Tailwind'],
+      'En interaktiv visuell plattform för musik och boards. Byggd främst för att skapa ett smidigt workflow för ett album jag håller på med. Jag kan lyssna på varje demo/mix osv, och lätt se i vilken process varje låt är i.',
+    tags: [
+      'Next.js',
+      'TypeScript',
+      'Tailwind',
+      'dnd-kit',
+      'PostgreSQL via Supabase',
+      'Prisma',
+      'Vercel',
+    ],
     link: 'https://sound-stage-f2xk.vercel.app/?boardId=cmmdz0ibd0000uuvsuquk8sa8',
     github: 'https://github.com/mfjohnsson/SoundStage',
     image: '/soundstage-screenshot.png',
