@@ -7,6 +7,12 @@ import Navbar from '@/components/Navbar';
 export const metadata: Metadata = {
   title: 'Martin Johansson || Developer',
   description: 'En portfolio för några av mina projekt',
+  icons: {
+    icon: [
+      { url: '/favicon.ico?v=1' }, 
+    ],
+    apple: [{ url: '/apple-touch-icon.png?v=1' }],
+  },
 };
 
 export default function RootLayout({
